@@ -1,13 +1,21 @@
 from django.db import models
 
-# Create your models here. Создание таблицы.
+class Category(models.Model):
+    name = models.CharField(max_length=150, verbose_name="Категория")
+    description = models.TextField(max_length=150, verbose_name="Описание")
 
+    class Meta:
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
+        ordering = ["name"]
+        db_table = "category"
 
-from django.db import models
+    def __str__(self):
+        return f"{self.name} {self.description}"
 
 
 class Product(models.Model):
-    product_name = models.CharField(
+    name = models.CharField(
         max_length=150, verbose_name="Имя продукта", help_text="Введите имя продукта"
     )
     description = models.TextField(
@@ -24,38 +32,25 @@ class Product(models.Model):
         verbose_name="Фото продукта",
         help_text="Загрузите фото",
     )
-    category_name = models.ForeignKey(
-        "Category",
+    # Поле связи (внешний ключ)
+    category = models.ForeignKey(
+        Category,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name="Категория",
-        help_text="Введите описание продукта",
+        help_text="Выберите категорию продукта",
         related_name="products",
     )
-    price = models.IntegerField(verbose_name="Цена", help_text="Введите цену")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
 
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
-        ordering = ["product_name"]
+        ordering = ["name"]
         db_table = "product"
 
     def __str__(self):
-        return f"{self.product_name} {self.category_name} {self.description}"
-
-
-class Category(models.Model):
-    category_name = models.CharField(max_length=150, verbose_name="Категория")
-    description = models.TextField(max_length=150, verbose_name="Описание")
-
-    class Meta:
-        verbose_name = "категория"
-        verbose_name_plural = "категории"
-        ordering = ["category_name"]
-        db_table = "category"
-
-    def __str__(self):
-        return f"{self.category_name} {self.description}"
+        return f"{self.name} ({self.category})"
