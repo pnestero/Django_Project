@@ -14,8 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Category",
             fields=[
-                (
-                    "id",
+                ("id",
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
@@ -23,9 +22,9 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=150, verbose_name="Категория")),
-                (
-                    "description",
+                ("name",
+                    models.CharField(max_length=150, verbose_name="Категория")),
+                ("description",
                     models.TextField(max_length=150, verbose_name="Описание"),
                 ),
             ],
