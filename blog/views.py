@@ -1,9 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-
-
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
@@ -14,11 +8,20 @@ class PostListView(ListView):
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
 
+    def get_queryset(self):
+        return Post.objects.filter(publication_attribute=True)
+
 
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        obj.views += 1
+        obj.save()
+        return obj
 
 
 class PostCreateView(CreateView):
@@ -32,7 +35,6 @@ class PostUpdateView(UpdateView):
     model = Post
     fields = ['title', 'content', 'image', 'publication_attribute']
     template_name = 'blog/post_form.html'
-    success_url = reverse_lazy('blog:post_list')
 
 
 class PostDeleteView(DeleteView):
