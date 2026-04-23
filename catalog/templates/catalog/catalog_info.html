@@ -18,10 +18,11 @@
                     <img src="{{ object.photo | media }}" class="img-fluid">
 
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li><strong>Категория:{{ object.category }}</strong> </li>
+                        <li><strong>Категория:{{ object.category }}</strong></li>
                         <li class="mt-2">{{ object.description }}</li>
                     </ul>
-<a href="{% url 'catalog:home' %}" class="w-100 btn btn-lg btn-primary mt-auto">Назад к списку</a></div>
+                    <a href="{% url 'catalog:home' %}" class="w-100 btn btn-lg btn-primary mt-auto">Назад к списку</a>
+                </div>
             </div>
         </div>
     </div>
