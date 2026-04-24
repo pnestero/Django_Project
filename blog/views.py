@@ -37,7 +37,7 @@ class PostUpdateView(UpdateView):
     template_name = 'blog/post_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('blog:post_list', args=[self.kwargs.get('pk')])
+        return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.pk})
 
 
 class PostDeleteView(DeleteView):
