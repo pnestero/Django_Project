@@ -1,0 +1,30 @@
+{% extends 'catalog/base.html' %}
+{% block info %}
+
+
+<div class="container">
+    <h1 class="my-4">Статьи блога</h1>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <a href="{% url 'blog:post_detail' post.pk %}" class="btn btn-primary">Читать</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Просмотров: {{ post.views }} | {{ post.creation_date|date:"d.m.Y" }}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Нет опубликованных статей.</p>
+        {% endfor %}
+    </div>
+    <a href="{% url 'blog:post_create' %}" class="btn btn-success">Создать новую статью</a>
+</div>
+{% endblock %}

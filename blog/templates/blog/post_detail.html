@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% block info %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h1 class="card-title">{{ post.title }}</h1>
+                    <p class="text-muted">Дата: {{ post.creation_date|date:"d.m.Y" }} | Просмотров: {{ post.views }}</p>
+                    <p class="card-text">{{ post.content|linebreaks }}</p>
+                    <div class="mt-4">
+                        <a href="{% url 'blog:post_update' post.pk %}" class="btn btn-warning">Редактировать</a>
+                        <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-danger">Удалить</a>
+                        <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Назад к списку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

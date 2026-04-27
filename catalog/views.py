@@ -1,23 +1,19 @@
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, TemplateView
 
-import catalog
 from catalog.models import Product
 
 
 # Create your views here.
-def home(request):
-    product = Product.objects.all()
-    context = {"products": product}
-    return render(request, "home.html", context)
+
+class HomeListView(ListView):
+    model = Product
+    template_name = 'catalog/catalog_home.html'
 
 
-def contacts(request):
-    return render(request, "contacts.html")
+class ContactsView(TemplateView):
+    template_name = 'catalog/catalog_contacts.html'
 
 
-
-def info(request, pk):
-    product_item = get_object_or_404(Product, pk=pk)
-    context = {"product": product_item}
-    return render(request, "info.html", context)
-
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/catalog_info.html'
