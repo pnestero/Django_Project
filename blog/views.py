@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
-
+from .forms import PostForm
 
 class PostListView(ListView):
     model = Post
@@ -10,7 +10,6 @@ class PostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(publication_attribute=True)
-
 
 class PostDetailView(DetailView):
     model = Post
@@ -23,27 +22,21 @@ class PostDetailView(DetailView):
         obj.save()
         return obj
 
-
 class PostCreateView(CreateView):
     model = Post
-    fields = ['title', 'content', 'image', 'publication_attribute']
+    form_class = PostForm          # ← заменили fields
     template_name = 'blog/post_form.html'
     success_url = reverse_lazy('blog:post_list')
 
-
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ['title', 'content', 'image', 'publication_attribute']
+    form_class = PostForm          # ← заменили fields
     template_name = 'blog/post_form.html'
 
     def get_success_url(self):
         return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.pk})
 
-
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('blog:post_list')
-
-
-

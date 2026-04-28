@@ -43,6 +43,7 @@ class Product(models.Model):
         related_name="products",
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    is_available = models.BooleanField(default=True, verbose_name="Доступен")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
 
